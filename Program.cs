@@ -6,24 +6,11 @@ namespace Interview_Test
     {
         static void Main(string[] args)
         {
-            ShipmentManager myShipmentManager = new ShipmentManager(PaymentType.UpgradeMembership);
+            ShipmentManager myShipmentManager = new ShipmentManager(new NewMembership());
             myShipmentManager.StartShipment();
         }
     }
-
-    public enum PaymentType
-    {
-        PhysicalProduct = 0,
-        Book,
-        NewMembership,
-        UpgradeMembership,
-        LearningToSkiVideo
-    }
-
-    public interface IProduct
-    {
-        public void StartProductShipment();
-    }
+      
 
     public interface IShipment
     {
@@ -157,45 +144,16 @@ namespace Interview_Test
 
     public class ShipmentManager
     {
-        private PaymentType paymentType;
+        private IProduct _product;
 
-        public ShipmentManager(PaymentType pType)
+        public ShipmentManager(IProduct product)
         {
-            this.paymentType = pType;
+            _product = product;
         }
 
         public void StartShipment()
         {
-            switch (paymentType)
-            {
-                case PaymentType.PhysicalProduct:
-                    PhysicalProduct myPhysicalProduct = new PhysicalProduct();
-                    myPhysicalProduct.StartProductShipment();
-                    break;
-
-                case PaymentType.Book:
-                    Book myBooK = new Book();
-                    myBooK.StartProductShipment();
-                    break;
-
-                case PaymentType.NewMembership:
-                    NewMembership myNewMembership = new NewMembership();
-                    myNewMembership.StartProductShipment();
-                    break;
-
-                case PaymentType.UpgradeMembership:
-                    UpgradeMembership myUpgradeMembership = new UpgradeMembership();
-                    myUpgradeMembership.StartProductShipment();
-                    break;
-
-                case PaymentType.LearningToSkiVideo:
-                    LearningToSkiVideo myLearningToSkiVideo = new LearningToSkiVideo();
-                    myLearningToSkiVideo.StartProductShipment();
-                    break;
-
-                default:
-                    throw new NotImplementedException();
-            }
+            _product.StartProductShipment();
         }
     }
 }
